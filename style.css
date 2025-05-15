@@ -1,0 +1,206 @@
+.ortalama {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* ekranda boşluk olsun ve align-items kullanılsın */
+  width: 100%;
+}
+
+.kayıt-blog {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*text-align: center;
+    margin-bottom: 20px;*/
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #e0d9d9;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #ab46da;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #a02fec;
+}
+
+.my-alert {
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  width: 95%;
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.success-alert {
+  background: linear-gradient(to right, #a37bd1, #65489d);
+  color: #ffffff;
+  border: 1px solid #f5f7f4;
+}
+
+.error-alert {
+  background: linear-gradient(to right, #f85032, #e73827);
+  color: #ffffff;
+  border: 1px solid #e73827;
+}
+
+.etkinlikAd {
+  color: #b92b12;
+  font-weight: bold;
+}
+
+.etkinlik {
+  font-weight: bold;
+}
+
+.announcement-card {
+  transition: transform 0.2s;
+  margin-bottom: 20px;
+}
+
+.announcement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*bootstrap ta temel düzeyde var.*/
+/* Duyuru kartı */
+.duyuru-kart {
+    min-width: 300px;
+    max-width: 300px;
+    overflow: hidden;
+    word-break: break-word;
+    white-space: normal;
+    text-overflow: ellipsis;
+    /* kutuyu özelleştirdim*/
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.duyuru-kart:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Slider alanı */
+#duyurular-slider {
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    padding: 10px 60px;
+    gap: 16px;
+}
+
+/* Ok butonları */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /*katmanların üstünde olması için*/
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* bu alan tamamen yuvarlağı oluşturur.*/
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sol_ok {
+    left: 10px;
+}
+
+.sag_ok {
+    right: 10px;
+}
+
+/* öneri kısmı için */
+.oneri-slider{
+  scroll-behavior: smooth;
+    overflow-x: auto;
+    padding: 10px 60px;
+    gap: 16px;
+
+}
+
+.slider-arrow-oneri{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /*katmanların üstünde olması için*/
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* bu alan tamamen yuvarlağı oluşturur.*/
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.oneri-sol-ok{
+  left: 10px;
+}
+.oneri-sag-ok{
+  right: 10px;
+}

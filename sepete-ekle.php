@@ -13,7 +13,8 @@ if (!$baglanti) {
     exit;
 }
 
-// JSON verisini al
+// Frontend'den gönderilen JSON formatındaki veriyi al. 
+//bu sayede gelen etkinlik id'si bilet türü gibi bilgiler PHP de kullanılabilir.
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!$data) {
@@ -25,7 +26,7 @@ if (!$data) {
 $etkinlik_id = $data['etkinlik_id'];
 $bilet_turu = $data['bilet_turu'];
 
-// Kullanıcı emailini session'dan al
+// Kullanıcı emailini session'dan al. Kullanıcı oturumu açık mı?
 $kullanici_email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
 if (!$kullanici_email) {
     echo json_encode(['hata' => 'Kullanıcı oturumu bulunamadı. Lütfen tekrar giriş yapın.']);
@@ -35,6 +36,7 @@ if (!$kullanici_email) {
 // Önce kontenjan kontrolü yap
 $kontenjan_sorgu = "SELECT kontenjan FROM etkinlikler WHERE id = ?";
 $stmt = $baglanti->prepare($kontenjan_sorgu);
+
 if (!$stmt) {
     error_log("Kontenjan sorgusu hazırlama hatası: " . $baglanti->error);
     echo json_encode(['hata' => 'Sistem hatası']);
@@ -65,6 +67,7 @@ if ($etkinlik['kontenjan'] <= 0) {
 // Fiyat ve etkinlik adını al
 $fiyat_sorgu = "SELECT fiyat_normal, fiyat_ogrenci, ad FROM etkinlikler WHERE id = ?";
 $stmt = $baglanti->prepare($fiyat_sorgu);
+
 if (!$stmt) {
     error_log("Fiyat sorgusu hazırlama hatası: " . $baglanti->error);
     echo json_encode(['hata' => 'Sistem hatası']);

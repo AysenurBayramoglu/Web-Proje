@@ -9,7 +9,7 @@ if (!isset($_SESSION['email'])) {
 }
 $kullanici_email = $_SESSION['email'];
 
-// JSON verisini al
+// JSON verisini al(Frontend'den)
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!$data) {
@@ -20,7 +20,7 @@ if (!$data) {
 $sepet_id = $data['sepet_id'];
 $etkinlik_id = $data['etkinlik_id'];
 
-// Transaction başlat
+// Transaction başlat( birden fazla veri tabanında işlem yapılacağı için işlemler arasındaki tutarlılığı sağlamak için başlatılır.)
 $baglanti->begin_transaction();
 
 try {

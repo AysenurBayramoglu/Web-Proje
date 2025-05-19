@@ -9,19 +9,6 @@ if (!isset($_SESSION["email"])) {
     exit;
 }
 
-// Kullanıcı onaylı mı kontrolü
-$email = $_SESSION["email"];
-//sql sorgusu ile
-$sorgu = mysqli_query($baglanti, "SELECT onayli FROM kullanicilar WHERE email='$email'");
-$kullanici = mysqli_fetch_assoc($sorgu);
-
-if ($kullanici["onayli"] != 1) {
-    // Onaylı değilse oturum sonlandır.
-    session_destroy();
-    header("Location: giris-yap.php?onay=bekleniyor");
-    exit;
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,6 +116,28 @@ if ($kullanici["onayli"] != 1) {
                     <p class="card-text"> "Dinlenmek ve yenilenmek isteyenler için Kapadokya Tatili güzel bir tercih olabilir.Detayları incelemeyi unutmayınız." </p>
                 </div>
             </div>
+
+            <div class="card mx-2 flex-shrink-0" style="min-width: 300px; max-width: 300px;">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-success">Spor ve Sağlık Tutkunlarına</h5>
+                    <p class="card-text">Sabah koşusu, yoga ve sağlıklı yaşam seminerleriyle dolu Wellness Günleri seni bekliyor!</p>
+                </div>
+            </div>
+
+            <div class="card mx-2 flex-shrink-0" style="min-width: 300px; max-width: 300px;">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-warning">Teknoloji Meraklılarına</h5>
+                    <p class="card-text"> Yapay Zeka ve Web konulu Teknoloji Zirvesi'ni kaçırmayınız!!!</p>
+                </div>
+            </div>
+
+            <div class="card mx-2 flex-shrink-0" style="min-width: 300px; max-width: 300px;">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-primary"> Sanatla İç İçe Olmak İsteyenlere</h5>
+                    <p class="card-text"> Resim, heykel ve dijital sanat atölyelerine katılarak yaratıcılığınızı keşfedin.</p>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- öneriler kısmı bitiş-->
@@ -146,7 +155,7 @@ if ($kullanici["onayli"] != 1) {
         <div id="duyurular-slider" class="d-flex overflow-auto" style="scroll-behavior: smooth; padding: 10px 60px;">
 
             <?php
-            //en fazla 10 duyuru tarihe göre
+            //en fazla 10 duyuru ve tarihe göre sırala
             $duyurular = mysqli_query($baglanti, "SELECT * FROM duyurular ORDER BY tarih DESC LIMIT 10");
             while ($duyuru = mysqli_fetch_assoc($duyurular)) {
                 echo '<div class="card mx-2 flex-shrink-0 duyuru-kart" style="min-width: 300px; max-width: 300px;">';
@@ -169,7 +178,7 @@ if ($kullanici["onayli"] != 1) {
             fetch("etkinlik-ve-hava-api.php")
                 .then(response => response.json())
                 .then(data => {
-                     const container = document.getElementById("etkinlikler-row"); // Değişiklik burada
+                     const container = document.getElementById("etkinlikler-row"); 
                     container.innerHTML = ""; // Sadece etkinlikler row'unu temizle.
 
                     //her kart için yeni bir div

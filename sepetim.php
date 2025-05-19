@@ -44,7 +44,7 @@ $sonuc = $stmt->get_result();
     <!-- menü kısmı başlangıç-->
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> PROJE </a>
+            <a class="navbar-brand" href="#"> Etkinlik Yönetim Sistemi </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -52,7 +52,7 @@ $sonuc = $stmt->get_result();
             <!--menü kısmı sağa yaslansın (end)-->
             <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                   <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="kesinAnaSayfa.php">Ana Sayfa</a>
                     </li>
                     <li class="nav-item">
@@ -82,7 +82,7 @@ $sonuc = $stmt->get_result();
     </nav>
     <!-- menü kısmı bitiş-->
 
-    <!-- Sepet içeriği başlangıç -->
+    <!-- Sepet içeriği başlangıç (bu değişmez) -->
     <div class="container mt-5 pt-5">
         <h2 class="text-center mb-4">Sepetim</h2>
         <div class="row"> <!--grid yapısı-->
@@ -119,6 +119,7 @@ $sonuc = $stmt->get_result();
     </div>
     <!-- Sepet içeriği bitiş -->
 
+    <!--burası sepet özeti ve ödeme yöntemlerinin olduğu kısım-->
     <div class="container mt-5 pt-5">
         <div class="row"> <!--grid yapısı-->
             <div class="col-md-12"><!--sayfanın tamamını kaplasın-->
@@ -129,8 +130,9 @@ $sonuc = $stmt->get_result();
 
                         <!-- Ödeme Yöntemleri -->
                         <h6 class="mt-3">Ödeme Yöntemi Seçin:</h6>
-                        <form>
+                        <form id="odemeFormu">
                             <div class="form-check">
+                                <!-- radio kısımları yanı seçim kısımları burda-->
                                 <input class="form-check-input" type="radio" name="odeme_yontemi" id="krediKarti" value="krediKarti" checked>
                                 <label class="form-check-label" for="krediKarti">Kredi Kartı</label>
                             </div>
@@ -142,6 +144,78 @@ $sonuc = $stmt->get_result();
                                 <input class="form-check-input" type="radio" name="odeme_yontemi" id="kapidaOdeme" value="kapidaOdeme">
                                 <label class="form-check-label" for="kapidaOdeme">Taksit</label>
                             </div>
+
+                            <!-- Kredi Kartı Formu -->
+                            <div id="krediKartiForm" class="payment-form mt-3">
+                                <div class="mb-3">
+                                    <label for="kartNo" class="form-label">Kart Numarası</label>
+                                    <input type="text" class="form-control" id="kartNo" placeholder="1234 5678 9012 3456" maxlength="19">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sonKullanma" class="form-label">Son Kullanma Tarihi</label>
+                                        <input type="text" class="form-control" id="sonKullanma" placeholder="AA/YY" maxlength="5">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cvv" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cvv" placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kartSahibi" class="form-label">Kart Sahibinin Adı</label>
+                                    <input type="text" class="form-control" id="kartSahibi" placeholder="Ad Soyad">
+                                </div>
+                            </div>
+
+                            <!-- Banka Kartı Formu -->
+                            <div id="bankaHavalesiForm" class="payment-form mt-3" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="kartNoBanka" class="form-label">Kart Numarası</label>
+                                    <input type="text" class="form-control" id="kartNoBanka" placeholder="1234 5678 9012 3456" maxlength="19">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sonKullanmaBanka" class="form-label">Son Kullanma Tarihi</label>
+                                        <input type="text" class="form-control" id="sonKullanmaBanka" placeholder="AA/YY" maxlength="5">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cvvBanka" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cvvBanka" placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kartSahibiBanka" class="form-label">Kart Sahibinin Adı</label>
+                                    <input type="text" class="form-control" id="kartSahibiBanka" placeholder="Ad Soyad">
+                                </div>
+                            </div>
+
+                            <!-- Taksit Formu -->
+                            <div id="kapidaOdemeForm" class="payment-form mt-3" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="taksitSayisi" class="form-label">Taksit Sayısı</label>
+                                    <select class="form-select" id="taksitSayisi">
+                                        <option value="2">2 Taksit</option>
+                                        <option value="3">3 Taksit</option>
+                                        <option value="6">6 Taksit</option>
+                                        <option value="9">9 Taksit</option>
+                                        <option value="12">12 Taksit</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kartNoTaksit" class="form-label">Kart Numarası</label>
+                                    <input type="text" class="form-control" id="kartNoTaksit" placeholder="1234 5678 9012 3456" maxlength="19">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sonKullanmaTaksit" class="form-label">Son Kullanma Tarihi</label>
+                                        <input type="text" class="form-control" id="sonKullanmaTaksit" placeholder="AA/YY" maxlength="5">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cvvTaksit" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cvvTaksit" placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+                            </div>
                         </form>
 
                         <button class="btn btn-success w-100 mt-3" onclick="odemeYap()">Ödeme Yap</button>
@@ -150,7 +224,7 @@ $sonuc = $stmt->get_result();
             </div>
         </div>
     </div>
-    
+
 
 
     <!-- Sepetten silme işlemi için JavaScript -->
@@ -185,22 +259,90 @@ $sonuc = $stmt->get_result();
         }
 
         function odemeYap() {
+            // Sepet boş mu kontrol et
+            if (document.querySelectorAll('.card-body .mb-3').length === 0) {
+                alert('Sepetiniz boş!');
+                return;
+            }
+
+            // Seçili ödeme yöntemini al
+            const odemeYontemi = document.querySelector('input[name="odeme_yontemi"]:checked').value;
+            let formData = {
+                kullanici_email: '<?= $kullanici_email ?>',
+                odeme_yontemi: odemeYontemi
+            };
+
+            // Form alanlarını kontrol et
+            let isValid = true;
+            switch (odemeYontemi) {
+                case 'krediKarti':
+                    const kartNo = document.getElementById('kartNo').value;
+                    const sonKullanma = document.getElementById('sonKullanma').value;
+                    const cvv = document.getElementById('cvv').value;
+                    const kartSahibi = document.getElementById('kartSahibi').value;
+
+                    if (!kartNo || !sonKullanma || !cvv || !kartSahibi) {
+                        alert('Lütfen tüm kart bilgilerini doldurun!');
+                        isValid = false;
+                    } else {
+                        formData.kart_no = kartNo;
+                        formData.son_kullanma = sonKullanma;
+                        formData.cvv = cvv;
+                        formData.kart_sahibi = kartSahibi;
+                    }
+                    break;
+
+                case 'bankaHavalesi':
+                    const kartNoBanka = document.getElementById('kartNoBanka').value;
+                    const sonKullanmaBanka = document.getElementById('sonKullanmaBanka').value;
+                    const cvvBanka = document.getElementById('cvvBanka').value;
+                    const kartSahibiBanka = document.getElementById('kartSahibiBanka').value;
+
+                    if (!kartNoBanka || !sonKullanmaBanka || !cvvBanka || !kartSahibiBanka) {
+                        alert('Lütfen tüm kart bilgilerini doldurun!');
+                        isValid = false;
+                    } else {
+                        formData.kart_no = kartNoBanka;
+                        formData.son_kullanma = sonKullanmaBanka;
+                        formData.cvv = cvvBanka;
+                        formData.kart_sahibi = kartSahibiBanka;
+                    }
+                    break;
+
+                case 'kapidaOdeme':
+                    const taksitSayisi = document.getElementById('taksitSayisi').value;
+                    const kartNoTaksit = document.getElementById('kartNoTaksit').value;
+                    const sonKullanmaTaksit = document.getElementById('sonKullanmaTaksit').value;
+                    const cvvTaksit = document.getElementById('cvvTaksit').value;
+
+                    if (!kartNoTaksit || !sonKullanmaTaksit || !cvvTaksit) {
+                        alert('Lütfen tüm kart bilgilerini doldurun!');
+                        isValid = false;
+                    } else {
+                        formData.taksit_sayisi = taksitSayisi;
+                        formData.kart_no = kartNoTaksit;
+                        formData.son_kullanma = sonKullanmaTaksit;
+                        formData.cvv = cvvTaksit;
+                    }
+                    break;
+            }
+
+            if (!isValid) return;
+
             if (confirm('Ödeme yapmak istediğinizden emin misiniz?')) {
                 fetch('odeme-yap.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        kullanici_email: '<?= $kullanici_email ?>'
-                    })
+                    body: JSON.stringify(formData)
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.hata) {
                         alert(data.hata);
                     } else {
-                        alert('Ödeme başarıyla tamamlandı! Sepetiniz boşaltıldı.');
+                        alert('Ödeme başarıyla tamamlandı!');
                         location.reload();
                     }
                 })
@@ -210,6 +352,65 @@ $sonuc = $stmt->get_result();
                 });
             }
         }
+
+        // Ödeme formlarını göster/gizle
+        document.querySelectorAll('input[name="odeme_yontemi"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Tüm formları gizle
+                document.querySelectorAll('.payment-form').forEach(form => {
+                    form.style.display = 'none';
+                });
+
+                // Seçilen formu göster
+                const selectedForm = document.getElementById(this.value + 'Form');
+                if (selectedForm) {
+                    selectedForm.style.display = 'block';
+                }
+            });
+        });
+
+        //kart blgileri daha kolay girilsin diye formatını hazırla.
+        // Kart numarası formatı
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            let formattedValue = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+            input.value = formattedValue;
+        }
+
+        // Son kullanma tarihi formatı
+        function formatExpiryDate(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+        }
+
+        // Input event listeners
+        document.getElementById('kartNo').addEventListener('input', function() {
+            formatCardNumber(this);
+        });
+        document.getElementById('kartNoTaksit').addEventListener('input', function() {
+            formatCardNumber(this);
+        });
+        document.getElementById('kartNoBanka').addEventListener('input', function() {
+            formatCardNumber(this);
+        });
+        document.getElementById('sonKullanma').addEventListener('input', function() {
+            formatExpiryDate(this);
+        });
+        document.getElementById('sonKullanmaTaksit').addEventListener('input', function() {
+            formatExpiryDate(this);
+        });
+        document.getElementById('sonKullanmaBanka').addEventListener('input', function() {
+            formatExpiryDate(this);
+        });
     </script>
 
     <!--bookstrap javaScript linki-->

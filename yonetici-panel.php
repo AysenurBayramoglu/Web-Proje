@@ -103,6 +103,15 @@ if (!isset($_SESSION["email"]) || !isset($_SESSION["rol"]) || $_SESSION["rol"] !
                 $etkinlik = mysqli_query($baglanti, "SELECT * FROM etkinlikler WHERE id = $id");
                 if (mysqli_num_rows($etkinlik) > 0) {
                     $etkinlik = mysqli_fetch_assoc($etkinlik);
+                    // --- Tarih ve saat bilgisini ayır ---
+                    // $etkinlik['tarih'] örnek: 2024-06-01 14:30:00
+                    $tarih = '';
+                    $saat = '';
+                    if (isset($etkinlik['tarih'])) {
+                        $parcalar = explode(' ', $etkinlik['tarih']); // Tarih ve saat boşlukla ayrılır
+                        $tarih = $parcalar[0]; // Yıl-ay-gün
+                        $saat = isset($parcalar[1]) ? substr($parcalar[1], 0, 5) : ''; // Saat:dakika
+                    }
 
                     // Form gönderilmişse etkinlik düzenle alanı varsa çalışır.
                     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["etkinlik_duzenle"])) {
@@ -112,6 +121,8 @@ if (!isset($_SESSION["email"]) || !isset($_SESSION["rol"]) || $_SESSION["rol"] !
                         $etkinlik_turu = $_POST["etkinlik_turu"];
                         $aciklama = $_POST["aciklama"];
                         $tarih = $_POST["tarih"];
+                        $saat = $_POST["saat"];
+                        $tarih_saat = $tarih . " " . $saat;
                         $kontenjan = intval($_POST["kontenjan"]);
                         $fiyat_normal = floatval($_POST["fiyat_normal"]);
                         $fiyat_ogrenci = floatval($_POST["fiyat_ogrenci"]);
@@ -119,7 +130,7 @@ if (!isset($_SESSION["email"]) || !isset($_SESSION["rol"]) || $_SESSION["rol"] !
 
                         //var olan etkinliği düzenler. UPDATE(bunun sayesinde veri tabanında değişiklik yapılır.)
                         $sorgu = $baglanti->prepare("UPDATE etkinlikler SET ad=?, etkinlik_turu=?, aciklama=?, tarih=?, kontenjan=?, fiyat_normal=?, fiyat_ogrenci=?, sehir=? WHERE id=?");
-                        $sorgu->bind_param("ssssiddsi", $ad, $etkinlik_turu, $aciklama, $tarih, $kontenjan, $fiyat_normal, $fiyat_ogrenci, $sehir, $id); //sql de ? yerlerine birim atamak için.
+                        $sorgu->bind_param("ssssiddsi", $ad, $etkinlik_turu, $aciklama, $tarih_saat, $kontenjan, $fiyat_normal, $fiyat_ogrenci, $sehir, $id); //sql de ? yerlerine birim atamak için.
                         //sonuç gösterilir.
                         if ($sorgu->execute()) {
                             echo '<div class="alert alert-success">Etkinlik başarıyla güncellendi.</div>';
@@ -147,7 +158,13 @@ if (!isset($_SESSION["email"]) || !isset($_SESSION["rol"]) || $_SESSION["rol"] !
                         </div>
                         <div class="col-md-4">
                             <label for="tarih" class="form-label">Tarih</label>
-                            <input type="date" class="form-control" id="tarih" name="tarih" value="' . $etkinlik['tarih'] . '" required>
+                            <!-- Tarih inputuna sadece tarih kısmı verilir -->
+                            <input type="date" class="form-control" id="tarih" name="tarih" value="<?php echo $tarih; ?>" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="saat" class="form-label">Saat</label>
+                            <!-- Saat inputuna sadece saat:dakika kısmı verilir -->
+                            <input type="time" class="form-control" id="saat" name="saat" value="<?php echo $saat; ?>" required>
                         </div>
                         <div class="col-md-2">
                             <label for="kontenjan" class="form-label">Kontenjan</label>
@@ -184,13 +201,15 @@ if (!isset($_SESSION["email"]) || !isset($_SESSION["rol"]) || $_SESSION["rol"] !
                     $etkinlik_turu = $_POST["etkinlik_turu"];
                     $aciklama = $_POST["aciklama"];
                     $tarih = $_POST["tarih"];
+                    $saat = $_POST["saat"];
+                    $tarih_saat = $tarih . " " . $saat;
                     $kontenjan = intval($_POST["kontenjan"]);
                     $fiyat_normal = floatval($_POST["fiyat_normal"]);
                     $fiyat_ogrenci = floatval($_POST["fiyat_ogrenci"]);
                     $sehir = $_POST["sehir"];
                     //INSET sorgusuyla veri tabanına ekler.
                     $sorgu = $baglanti->prepare("INSERT INTO etkinlikler (ad, etkinlik_turu, aciklama, tarih, kontenjan, fiyat_normal, fiyat_ogrenci, sehir) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                    $sorgu->bind_param("ssssidds", $ad, $etkinlik_turu, $aciklama, $tarih, $kontenjan, $fiyat_normal, $fiyat_ogrenci, $sehir);
+                    $sorgu->bind_param("ssssidds", $ad, $etkinlik_turu, $aciklama, $tarih_saat, $kontenjan, $fiyat_normal, $fiyat_ogrenci, $sehir);
                     if ($sorgu->execute()) {
                         echo '<div class="alert alert-success">Etkinlik başarıyla eklendi.</div>';
                     } else {
@@ -217,6 +236,10 @@ if (!isset($_SESSION["email"]) || !isset($_SESSION["rol"]) || $_SESSION["rol"] !
                     <div class="col-md-4">
                         <label for="tarih" class="form-label">Tarih</label>
                         <input type="date" class="form-control" id="tarih" name="tarih" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="saat" class="form-label">Saat</label>
+                        <input type="time" class="form-control" id="saat" name="saat" required>
                     </div>
                     <div class="col-md-2">
                         <label for="kontenjan" class="form-label">Kontenjan</label>

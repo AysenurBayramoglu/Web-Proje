@@ -12,21 +12,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $secim = "SELECT * FROM kullanicilar WHERE email = '$email'";
     $calistir = mysqli_query($baglanti, $secim); //veri sorgulama
-    $kayitsayisi = mysqli_num_rows($calistir); // ya 0 ya 1 olabilir.
+    $kayitsayisi = mysqli_num_rows($calistir); // ya 0 ya 1 olabilir.Kullanıcı tablosunda bu email var mı?
 
     if ($kayitsayisi > 0) {
-      //o satırı dizi olarak getirir
-      $ilgiliKayit = mysqli_fetch_assoc($calistir);
+      
+      $ilgiliKayit = mysqli_fetch_assoc($calistir);//kullaniciler tablosunun ilgili satırını dizi olarak getirir.
       $hashliSifre = $ilgiliKayit["parola"];
       $ilkGiris = $ilgiliKayit["ilk_giris"];
+      $onayli = $ilgiliKayit["onayli"];
 
-      //verify:doğrulamak eşleşiyorlar mı bak.
-      if (password_verify($parola, $hashliSifre)) {
+      // Kullanıcı onaylı mı kontrolü
+      if ($onayli != 1) {//onaylı=1 olmalı.
+        $mesaj = '<div class="my-alert error-alert">Hesabınız henüz yönetici tarafından onaylanmadı.</div>';
+      } else if (password_verify($parola, $hashliSifre)) {//Girilen şifre ile veritabanındaki hash'li şifre eşleşiyor mu
         //oturumu başlat
         session_start();
         //kullanıcının oturum bilgisini saklar.
         $_SESSION["email"] = $ilgiliKayit["email"];
         $_SESSION["rol"] = $ilgiliKayit["rol"]; // Rolü de oturuma kaydet.
+        //ilk kez giriş yapıp yapmadığını kontrol et.
         if ($ilkGiris == 1) {
           header("location:sifre-degistirme.php");
           exit;

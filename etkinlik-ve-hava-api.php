@@ -17,7 +17,7 @@ while ($etkinlik = mysqli_fetch_assoc($sorgu)) {
     $havaVeri = file_get_contents($url); // API'den veri al.
     $hava = json_decode($havaVeri, true); // JSON'u php veri yapısına çevirir.
 
-    // etkinlik bilgisine hava durumu bilgisi varsa eklenir. 
+    // etkinlik bilgisine hava durumunda sıcaklık ve hava bilgisi varsa eklenir. 
     if (isset($hava['main']['temp']) && isset($hava['weather'][0]['description'])) {
         $etkinlik['hava_sicaklik'] = round($hava['main']['temp']);
         $etkinlik['hava_aciklama'] = $hava['weather'][0]['description'];

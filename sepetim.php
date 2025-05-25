@@ -9,7 +9,7 @@ if (!isset($_SESSION['email'])) {
 $kullanici_email = $_SESSION['email'];
 include("baglanti.php");
 
-// 2. Sepet verilerini çek
+//  Sepet verilerini çek
 $sql = "SELECT s.*, e.ad AS etkinlik_adi FROM sepet s 
         JOIN etkinlikler e ON s.etkinlik_id = e.id
         WHERE s.kullanici_email = ?

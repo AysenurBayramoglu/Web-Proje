@@ -338,6 +338,8 @@ $sonuc = $stmt->get_result();
                     },
                     body: JSON.stringify(formData)
                 })
+                //ödeme yap dosyasından sonra gelen yanıtı işler
+                // Sunucudan gelen yanıtı JSON formatına çevirir
                 .then(response => response.json())
                 .then(data => {
                     if (data.hata) {

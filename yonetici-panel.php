@@ -277,8 +277,9 @@ if (!isset($_SESSION["email"]) || !isset($_SESSION["rol"]) || $_SESSION["rol"] !
                     </tr>
 
                     <?php
+                   //burda mevcut etkinlikler tablosu oluşturuluyor.
                     include("baglanti.php");
-                    //tarih sırasına göre
+                    //tarih sırasına göre etkinlikler gösteriliyor 
                     $etkinlikler = mysqli_query($baglanti, "SELECT * FROM etkinlikler ORDER BY tarih DESC");
                     while ($etkinlik = mysqli_fetch_assoc($etkinlikler)) {
                         echo "<tr>

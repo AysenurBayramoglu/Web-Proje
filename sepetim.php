@@ -273,7 +273,7 @@ $sonuc = $stmt->get_result();
             };
 
             // Form alanlarını kontrol et
-            let isValid = true;
+            let isValid = true;//geçerli mi?
             switch (odemeYontemi) {
                 case 'krediKarti':
                     const kartNo = document.getElementById('kartNo').value;

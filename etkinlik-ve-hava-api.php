@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: application/json");
+header("Content-Type: application/json");//tarayıcıya bu dosyanın JSON formatında veri döndürdüğünü söyler.
 include("baglanti.php");
 
 $apiKey = "5b8ff43e3d2b74411bedda73b2fcd960";

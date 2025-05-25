@@ -90,7 +90,8 @@ $sonuc = $stmt->get_result();
                 <!-- Sepet ürünleri buraya gelecek -->
                 <div class="card mb-3">
                     <div class="card-body">
-                        <?php if ($sonuc->num_rows > 0): ?>
+                        <!-- Sepet içeriği gösterimi -->
+                        <?php if ($sonuc->num_rows > 0): ?> 
                             <?php $toplam = 0; ?>
                             <?php while ($satir = $sonuc->fetch_assoc()): ?>
                                 <div class="mb-3 border-bottom pb-2">

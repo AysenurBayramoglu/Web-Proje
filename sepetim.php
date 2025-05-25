@@ -393,7 +393,7 @@ $sonuc = $stmt->get_result();
             input.value = value;
         }
 
-        // Input event listeners
+        // Kart bilgilerinde özel formatlar
         document.getElementById('kartNo').addEventListener('input', function() {
             formatCardNumber(this);
         });

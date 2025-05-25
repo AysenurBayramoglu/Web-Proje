@@ -88,21 +88,6 @@ button:hover {
   font-weight: bold;
 }
 
-.announcement-card {
-  transition: transform 0.2s;
-  margin-bottom: 20px;
-}
-
-.announcement-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.announcement-header {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
